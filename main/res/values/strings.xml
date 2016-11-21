@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name" translatable="false">MyHealthPartner</string>
+    <string name="title_activity_main" translatable="false">My Health Partner</string>
+    <string name="action_profile">Profile</string>
+</resources>
