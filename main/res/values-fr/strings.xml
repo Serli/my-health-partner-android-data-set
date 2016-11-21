@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_profile">Profil</string>
+    <string name="title_activity_profile">Profil</string>
 </resources>
