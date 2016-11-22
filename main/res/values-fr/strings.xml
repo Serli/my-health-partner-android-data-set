@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="action_profile">Profil</string>
     <string name="title_activity_profile">Profil</string>
+    <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
+
+    <string-array name="sport_activity">
+        <item>Marche</item>
+        <item>Marche rapide</item>
+        <item>Course</item>
+        <item>Course rapide</item>
+    </string-array>
+
 </resources>

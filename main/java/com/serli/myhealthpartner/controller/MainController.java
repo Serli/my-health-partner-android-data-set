@@ -26,4 +26,9 @@ public class MainController {
         // TODO
     }
 
+    public boolean isAcquisitionStarted() {
+        // TODO
+        return false;
+    }
+
 }

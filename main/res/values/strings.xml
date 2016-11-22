@@ -3,4 +3,6 @@
     <string name="title_activity_main" translatable="false">My Health Partner</string>
     <string name="action_profile">Profile</string>
     <string name="title_activity_profile">Profile</string>
+    <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
 </resources>
