@@ -24,7 +24,7 @@ public class AccelerometerDAO {
         database.close();
     }
 
-    public void addEntry(float x, float y, float z) {
+    public void addEntry(float x, float y, float z, long timestamp) {
         // TODO
     }
 
