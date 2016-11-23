@@ -6,6 +6,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -15,9 +17,13 @@ import com.serli.myhealthpartner.model.AccelerometerDAO;
  * This service store the accelerometer data for the duration specified in the intent.<br/>
  * The intent given in the start command must contain 2 extra data :<br/>
  * &nbsp;&nbsp;&nbsp;<b>duration</b> : an long which specify the duration of the acquisition.<br/>
- * &nbsp;&nbsp;&nbsp;<b>activity</b> : an int which specify the sport activity performed during the acquisition.<br/>
+ * &nbsp;&nbsp;&nbsp;<b>activity</b> : an int which specify the sport activity performed during the acquisition.<br/> <br/>
+ * When the service is started, it will play a beep sound as start signal for the user and an other at the end of the acquisition as stop signal for the user.
  */
 public class AccelerometerService extends Service {
+
+    private SoundPool soundPool;
+    private int soundID;
 
     private static boolean isRunning = false;
 
@@ -49,18 +55,38 @@ public class AccelerometerService extends Service {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+
         isRunning = true;
+
+        soundPool = new SoundPool(4, AudioManager.STREAM_ALARM, 100);
+        soundID = soundPool.load(this, R.raw.beep, 1);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         dao = new AccelerometerDAO(this);
-        super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         dao.open();
+
         activity = intent.getIntExtra("activity", 0);
-        startAcquisition(intent.getLongExtra("duration", 0));
+
+        final long duration = intent.getLongExtra("duration", 0);
+
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                soundPool.play(soundID, 1, 1, 1, 0, 1);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startAcquisition(duration);
+                    }
+                }, 2000);
+            }
+        });
         return START_NOT_STICKY;
     }
 
@@ -75,7 +101,7 @@ public class AccelerometerService extends Service {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                AccelerometerService.this.stopSelf();
+                stopAcquisition();
             }
         }, duration);
 
@@ -85,13 +111,14 @@ public class AccelerometerService extends Service {
      * Stop the acquisition of the accelerometer data.
      */
     private void stopAcquisition() {
-        sensorManager.unregisterListener(sensorEventListener, accelerometerSensor);
-        sendBroadcast(new Intent(BROADCAST_STOP_ACTION));
+        soundPool.play(soundID, 1, 1, 1, 0, 1);
+        AccelerometerService.this.stopSelf();
     }
 
     @Override
     public void onDestroy() {
-        stopAcquisition();
+        sensorManager.unregisterListener(sensorEventListener, accelerometerSensor);
+        sendBroadcast(new Intent(BROADCAST_STOP_ACTION));
         dao.close();
         isRunning = false;
         super.onDestroy();
