@@ -30,7 +30,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_PROFILE_TABLE = "CREATE TABLE " + PROFILE_TABLE + " ("
-                + PROFILE_ID + " INTEGER PRIMARY KEY,"
+                + PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + PROFILE_WEIGHT + " INTEGER NOT NULL,"
                 + PROFILE_HEIGHT + " INTEGER NOT NULL,"
                 + PROFILE_AGE + " DATE NOT NULL,"
