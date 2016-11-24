@@ -140,8 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void populateDataListView() {
         ListView listView = (ListView) findViewById(R.id.data_list_view);
         final List<AccelerometerData> datas = controller.getDatas();
-        //final List<AccelerometerData> datas = null;
-        ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, datas) {
+        ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, android.R.id.text1, datas) {
             @NonNull
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss,SSS");
 
                 text1.setText(dateFormat.format(new Date(data.getTimestamp())));
-                text2.setText(String.format("x=%.2f$1 y=%.2f$2 z=%.2f$3 $4", data.getX(), data.getY(), data.getZ(), MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]));
+                text2.setText(String.format("x=%1$.2f y=%2$.2f z=%3$.2f ", data.getX(), data.getY(), data.getZ()) + MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]);
 
                 return view;
             }
