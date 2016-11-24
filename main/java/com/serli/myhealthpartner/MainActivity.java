@@ -24,8 +24,8 @@ import android.widget.TextView;
 import com.serli.myhealthpartner.controller.MainController;
 import com.serli.myhealthpartner.model.AccelerometerData;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         filter.addAction(AccelerometerService.BROADCAST_STOP_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
 
-        //populateDataListView();
-
         RelativeLayout dataLayout = (RelativeLayout) findViewById(R.id.data_list_layout);
         dataLayout.setVisibility(RelativeLayout.INVISIBLE);
 
@@ -112,8 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (item.getItemId() == R.id.action_show_data) {
             RelativeLayout dataLayout = (RelativeLayout) findViewById(R.id.data_list_layout);
-            if (dataLayout.getVisibility() == RelativeLayout.INVISIBLE)
+            if (dataLayout.getVisibility() == RelativeLayout.INVISIBLE) {
+                populateDataListView();
                 dataLayout.setVisibility(RelativeLayout.VISIBLE);
+            }
             else
                 dataLayout.setVisibility(RelativeLayout.INVISIBLE);
         }
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (acquisitionStarted) {
                 controller.stopAcquisition();
             } else {
-                long duration = minutePicker.getValue() * 60000 + secondPicker.getValue() * 1000;
+                long duration = minutePicker.getValue() * 60000L + secondPicker.getValue() * 1000L;
                 if (duration > 0) {
                     controller.startAcquisition(duration, activitySpinner.getSelectedItemPosition());
                 }
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 AccelerometerData data = datas.get(position);
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss,SSS");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss,S");
 
-                text1.setText(dateFormat.format(new Date(data.getTimestamp())));
+                text1.setText(dateFormat.format(new Timestamp(data.getTimestamp())));
                 text2.setText(String.format("x=%1$.2f y=%2$.2f z=%3$.2f ", data.getX(), data.getY(), data.getZ()) + MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]);
 
                 return view;

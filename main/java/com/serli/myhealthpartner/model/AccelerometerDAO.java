@@ -48,7 +48,6 @@ public class AccelerometerDAO {
      * @param activity  Data's activity
      */
     public void addEntry(float x, float y, float z, long timestamp, int activity) {
-
         ContentValues values = new ContentValues();
         values.put(database.ACC_TSTMP, timestamp);
         values.put(database.ACC_X, x);
@@ -68,8 +67,9 @@ public class AccelerometerDAO {
 
         List<AccelerometerData> acce_data_list = new ArrayList<AccelerometerData>();
         Cursor cursor = db.query(database.ACC_TABLE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, Database.ACC_TSTMP + " DESC");
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
             AccelerometerData acce_data = cursorToData(cursor);
             acce_data_list.add(acce_data);
@@ -87,7 +87,7 @@ public class AccelerometerDAO {
 
     private AccelerometerData cursorToData(Cursor cursor) {
         AccelerometerData acce_data = new AccelerometerData();
-        acce_data.setTimestamp(cursor.getInt(0));
+        acce_data.setTimestamp(cursor.getLong(0));
         acce_data.setX(cursor.getFloat(1));
         acce_data.setY(cursor.getFloat(2));
         acce_data.setZ(cursor.getFloat(3));
