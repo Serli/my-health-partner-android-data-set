@@ -7,4 +7,8 @@
     <string name="button_stop">Stop</string>
     <string name="button_update">Update</string>
     <string name="action_show_datas">Show datas</string>
+    <string name="text_weight">Weight (kg)</string>
+    <string name="text_height">Height (cm)</string>
+    <string name="text_gender">Gender</string>
+    <string name="text_birthday">Birthday</string>
 </resources>

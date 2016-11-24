@@ -15,5 +15,13 @@
         <item>Run</item>
         <item>Fast run</item>
     </string-array>
+    <string-array name="gender">
+        <item>Man</item>
+        <item>Woman</item>
+    </string-array>
+    <string name="text_birthday">Birthday</string>
+    <string name="text_gender">Gender</string>
+    <string name="text_height">Height (cm)</string>
+    <string name="text_weight">Weigth (kg)</string>
 
 </resources>
