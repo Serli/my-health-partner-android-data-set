@@ -45,7 +45,7 @@ public class AccelerometerService extends Service {
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
             long timestamp = sensorEvent.timestamp * 1000000;
-            dao.addEntry(x, y, z, timestamp);
+            dao.addEntry(x, y, z, timestamp, activity);
         }
 
         @Override
