@@ -8,24 +8,45 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Link between the acceleremoter data table in the {@link Database} and the controllers.
+ */
 public class AccelerometerDAO {
 
     private Database database;
     private SQLiteDatabase db;
     private String[] allColumns = {database.ACC_TSTMP, database.ACC_X, database.ACC_Y, database.ACC_Z, database.ACC_ACTIVITY};
 
+    /**
+     * @param context The context where the dao is called
+     */
     public AccelerometerDAO(Context context) {
         this.database = new Database(context);
     }
 
+    /**
+     * Open the connection with the database.
+     */
     public void open() {
         db = database.getWritableDatabase();
     }
 
+    /**
+     * Close the connection with the database.
+     */
     public void close() {
         database.close();
     }
 
+    /**
+     * Add an entry in the accelerometer data table.<br/>
+     *
+     * @param x         Data's X position
+     * @param y         Data's Y position
+     * @param z         Data's Z position
+     * @param timestamp Data's timestamp
+     * @param activity  Data's activity
+     */
     public void addEntry(float x, float y, float z, long timestamp, int activity) {
 
         ContentValues values = new ContentValues();
@@ -38,6 +59,11 @@ public class AccelerometerDAO {
         db.insert(database.ACC_TABLE, null, values);
     }
 
+    /**
+     * Return a List of {@link AccelerometerData} object containing the accelerometer data.
+     *
+     * @return The accelerometer data.
+     */
     public List<AccelerometerData> getDatas() {
 
         List<AccelerometerData> acce_data_list = new ArrayList<AccelerometerData>();
@@ -52,6 +78,9 @@ public class AccelerometerDAO {
         return acce_data_list;
     }
 
+    /**
+     * Delete the accelerometer data in the accelerometer data table
+     */
     public void deleteDatas() {
         db.delete(database.ACC_TABLE, null , null);
     }
