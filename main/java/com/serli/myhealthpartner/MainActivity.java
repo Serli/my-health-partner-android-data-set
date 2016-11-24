@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (acquisitionStarted) {
                 controller.stopAcquisition();
             } else {
-                int duration = minutePicker.getValue() * 60000 + secondPicker.getValue() * 1000;
+                long duration = minutePicker.getValue() * 60000 + secondPicker.getValue() * 1000;
                 if (duration > 0) {
                     controller.startAcquisition(duration, activitySpinner.getSelectedItemPosition());
                 }

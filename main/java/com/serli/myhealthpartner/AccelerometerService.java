@@ -104,7 +104,6 @@ public class AccelerometerService extends Service {
                 stopAcquisition();
             }
         }, duration);
-
     }
 
     /**

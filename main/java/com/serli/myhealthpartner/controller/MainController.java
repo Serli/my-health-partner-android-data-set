@@ -36,7 +36,7 @@ public class MainController {
      * @param duration The duration of the acquisition.
      * @param activity The sport activity performed during the acquisition.
      */
-    public void startAcquisition(int duration, int activity) {
+    public void startAcquisition(long duration, int activity) {
         if (!AccelerometerService.isRunning()) {
             Intent intent = new Intent(context, AccelerometerService.class);
             intent.putExtra("duration", duration);
