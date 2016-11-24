@@ -1,11 +1,17 @@
 package com.serli.myhealthpartner.model;
 
+/**
+ *
+ */
 public class AccelerometerData {
 
     private long timestamp;
     private float x, y, z;
     private int activity;
 
+    /**
+     * @return
+     */
     public long getTimestamp() {
         return timestamp;
     }

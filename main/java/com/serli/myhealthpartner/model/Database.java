@@ -20,8 +20,7 @@ public class Database extends SQLiteOpenHelper {
     public final static String ACC_X = "X_pos";
     public final static String ACC_Y = "Y_pos";
     public final static String ACC_Z = "Z_pos";
-    public final static String ACC_IMEI = "IMEI";
-    public final static String ACC_PROFILE_ID = "Profile_ID";
+    public final static String ACC_ACTIVITY = "Activity";
 
     public Database(Context context) {
         super(context, "myDB", null, VERSION);
@@ -41,9 +40,7 @@ public class Database extends SQLiteOpenHelper {
                 + ACC_X + " FLOAT NOT NULL,"
                 + ACC_Y + " FLOAT NOT NULL,"
                 + ACC_Z + " FLOAT NOT NULL,"
-                + ACC_IMEI + " INTEGER NOT NULL,"
-                + ACC_PROFILE_ID + " INTEGER NOT NULL,"
-                + "FOREIGN KEY(" + ACC_PROFILE_ID + ") REFERENCES " + PROFILE_TABLE + "(" + PROFILE_ID + ")" + ");";
+                + ACC_ACTIVITY + " INTEGER NOT NULL" + ");";
 
         sqLiteDatabase.execSQL(CREATE_PROFILE_TABLE);
         sqLiteDatabase.execSQL(CREATE_ACC_TABLE);
