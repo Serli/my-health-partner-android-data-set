@@ -5,6 +5,8 @@
     <string name="title_activity_profile">Profile</string>
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>
+    <string name="button_update">Update</string>
+    <string name="action_show_datas">Show datas</string>
 
 
     <string-array name="sport_activity">

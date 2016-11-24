@@ -19,8 +19,8 @@ public class ProfileController {
         dao = new ProfileDAO(context);
 
         dao.open();
+
         profile = dao.getProfile();
-        dao.close();
     }
 
     public ProfileData getProfile() {
@@ -28,10 +28,12 @@ public class ProfileController {
     }
 
     public void setProfile(ProfileData data) {
-        dao.open();
         dao.addEntry(data);
-        dao.close();
     }
 
-
+    @Override
+    protected void finalize() throws Throwable {
+        dao.close();
+        super.finalize();
+    }
 }
