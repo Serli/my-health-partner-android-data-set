@@ -12,5 +12,99 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.serli.myhealthpartner.ProfileActivity"
     tools:showIn="@layout/activity_profile">
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:id="@+id/textView2"
+        android:gravity="left"
+        android:layout_above="@+id/textView3"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:elevation="1dp"
+        android:padding="15dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/textView2"
+        android:padding="15dp"
+        android:gravity="left"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:layout_alignParentStart="true"
+        android:textColor="#00F"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:gravity="left"
+        android:padding="15dp"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignRight="@+id/textView3" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:gravity="left"
+        android:padding="15dp"
+        android:paddingTop="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/textView3" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+
+        android:ems="10"
+        android:id="@+id/editText"
+        android:autoText="false"
+        android:gravity="left"
+        tools:ignore="UnknownId"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <Button
+        android:text="OK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:editable="true"
+        android:gravity="left"
+        android:text="dd.mm.yyyy"
+        android:textAllCaps="true"
+        android:layout_below="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
+
 
 </RelativeLayout>
