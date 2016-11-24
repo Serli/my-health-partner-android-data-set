@@ -25,7 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView textView2;
     private TextView textView3;
     private TextView textView4;
-    private TextView textView5;
     private EditText EditText;
     static final String[] gender = new String[]{"--------------- ", "Man", "Women"};
 
@@ -50,9 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
         textView4 = (TextView) findViewById(R.id.textView4);
         textView4.setText("birthday");
 
-        textView5 = (TextView) findViewById(R.id.textView5);
-        textView5.setText("Application MyhealthPartner");
-
         EditText = (EditText)findViewById(R.id.editText);
 
         final Button loginButton = (Button) findViewById(R.id.button2);
@@ -67,11 +63,13 @@ public class ProfileActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         list.setAdapter(adapter);
     }
+
+    //calculate age
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getDifference(View v) {
-
+    public void getAge(View v) {
+        //date of birthday
         String dob_var = EditText.getText().toString();
-
+        //current date
         SimpleDateFormat df = new SimpleDateFormat("dd.MMM.yyyy");
         Calendar c = Calendar.getInstance();
         String currentDate = df.format(c.getTime());
