@@ -10,6 +10,9 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.SystemClock;
 
 import com.serli.myhealthpartner.model.AccelerometerDAO;
@@ -23,13 +26,19 @@ import com.serli.myhealthpartner.model.AccelerometerDAO;
  */
 public class AccelerometerService extends Service {
 
+    public static final int MSG_REGISTER_CLIENT = 1;
+    public static final int MSG_UNREGISTER_CLIENT = 2;
+    public static final int MSG_ACQUISITION_START = 3;
+    public static final int MSG_ACQUISITION_STOP = 4;
+
+    private final Messenger messenger = new Messenger(new IncomingMessageHandler());
+    private Messenger clientMessenger = null;
+
+
     private SoundPool soundPool;
     private int soundID;
 
     private static boolean isRunning = false;
-
-    public static final String BROADCAST_START_ACTION = "com.serli.AccelerometerService.START";
-    public static final String BROADCAST_STOP_ACTION = "com.serli.accelerometer.STOP";
 
     private AccelerometerDAO dao;
 
@@ -64,6 +73,7 @@ public class AccelerometerService extends Service {
         soundID = soundPool.load(this, R.raw.beep, 1);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         dao = new AccelerometerDAO(this);
     }
@@ -80,6 +90,16 @@ public class AccelerometerService extends Service {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
                 soundPool.play(soundID, 1, 1, 1, 0, 1);
+
+                if (clientMessenger != null) {
+                    try {
+                        Message msg = Message.obtain(null, MSG_ACQUISITION_START);
+                        msg.replyTo = messenger;
+                        clientMessenger.send(msg);
+                    } catch (RemoteException e) {
+                    }
+                }
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -98,7 +118,7 @@ public class AccelerometerService extends Service {
      */
     private void startAcquisition(long duration) {
         sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        sendBroadcast(new Intent(BROADCAST_START_ACTION));
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -112,13 +132,20 @@ public class AccelerometerService extends Service {
      */
     private void stopAcquisition() {
         soundPool.play(soundID, 1, 1, 1, 0, 1);
+        if (clientMessenger != null) {
+            try {
+                Message msg = Message.obtain(null, MSG_ACQUISITION_STOP);
+                msg.replyTo = messenger;
+                clientMessenger.send(msg);
+            } catch (RemoteException e) {
+            }
+        }
         AccelerometerService.this.stopSelf();
     }
 
     @Override
     public void onDestroy() {
         sensorManager.unregisterListener(sensorEventListener, accelerometerSensor);
-        sendBroadcast(new Intent(BROADCAST_STOP_ACTION));
         dao.close();
         isRunning = false;
         super.onDestroy();
@@ -126,7 +153,7 @@ public class AccelerometerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        throw null;
+        return messenger.getBinder();
     }
 
     /**
@@ -138,4 +165,19 @@ public class AccelerometerService extends Service {
         return isRunning;
     }
 
+    private class IncomingMessageHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_REGISTER_CLIENT:
+                    clientMessenger = msg.replyTo;
+                    break;
+                case MSG_UNREGISTER_CLIENT:
+                    clientMessenger = null;
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
 }

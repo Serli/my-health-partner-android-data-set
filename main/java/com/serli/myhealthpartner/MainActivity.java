@@ -1,12 +1,15 @@
 package com.serli.myhealthpartner;
 
-import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -32,7 +35,7 @@ import java.util.List;
  * View of the main activity.
  */
 // TODO : Add send and delete acquisition.
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ServiceConnection {
 
     private MainController controller;
 
@@ -43,19 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean acquisitionStarted;
 
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(AccelerometerService.BROADCAST_START_ACTION)) {
-                startStopButton.setText(R.string.button_stop);
-                acquisitionStarted = true;
-            }
-            if (intent.getAction().equals(AccelerometerService.BROADCAST_STOP_ACTION)) {
-                startStopButton.setText(R.string.button_start);
-                acquisitionStarted = false;
-            }
-        }
-    };
+    private Messenger serviceMessenger = null;
+    private final Messenger messenger = new Messenger(new IncomingMessageHandler());
+    private boolean serviceBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (acquisitionStarted)
             startStopButton.setText(R.string.button_stop);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(AccelerometerService.BROADCAST_START_ACTION);
-        filter.addAction(AccelerometerService.BROADCAST_STOP_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+        autoBindService();
 
         RelativeLayout dataLayout = (RelativeLayout) findViewById(R.id.data_list_layout);
         dataLayout.setVisibility(RelativeLayout.INVISIBLE);
@@ -124,11 +114,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.start_stop_button) {
             if (acquisitionStarted) {
+                doUnbindService();
                 controller.stopAcquisition();
+                startStopButton.setText(R.string.button_start);
+                acquisitionStarted = false;
             } else {
                 long duration = minutePicker.getValue() * 60000L + secondPicker.getValue() * 1000L;
                 if (duration > 0) {
                     controller.startAcquisition(duration, activitySpinner.getSelectedItemPosition());
+                    doBindService();
                 }
             }
         }
@@ -141,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ListView listView = (ListView) findViewById(R.id.data_list_view);
         final List<AccelerometerData> datas = controller.getDatas();
         ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, android.R.id.text1, datas) {
-            @NonNull
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -163,7 +156,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+        doUnbindService();
         super.onDestroy();
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+        serviceMessenger = new Messenger(iBinder);
+        try {
+            Message msg = Message.obtain(null, AccelerometerService.MSG_REGISTER_CLIENT);
+            msg.replyTo = messenger;
+            serviceMessenger.send(msg);
+        } catch (RemoteException e) {
+        }
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+        serviceMessenger = null;
+    }
+
+    /**
+     * Bind to the AccelerometerService if its already running.
+     */
+    private void autoBindService() {
+        if (AccelerometerService.isRunning()) {
+            doBindService();
+        }
+    }
+
+    /**
+     * Bind to the AccelerometerService.
+     */
+    private void doBindService() {
+        bindService(new Intent(this, AccelerometerService.class), this, Context.BIND_AUTO_CREATE);
+        serviceBound = true;
+    }
+
+    /**
+     * Unbind from the AccelerometerService
+     */
+    private void doUnbindService() {
+        if (serviceBound) {
+            if (serviceMessenger != null) {
+                try {
+                    Message msg = Message.obtain(null, AccelerometerService.MSG_UNREGISTER_CLIENT);
+                    msg.replyTo = messenger;
+                    serviceMessenger.send(msg);
+                } catch (RemoteException e) {
+                }
+            }
+            unbindService(this);
+            serviceBound = false;
+        }
+    }
+
+    private class IncomingMessageHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case AccelerometerService.MSG_ACQUISITION_START:
+                    acquisitionStarted = true;
+                    startStopButton.setText(R.string.button_stop);
+                    break;
+                case AccelerometerService.MSG_ACQUISITION_STOP:
+                    doUnbindService();
+                    acquisitionStarted = false;
+                    startStopButton.setText(R.string.button_start);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
     }
 }
