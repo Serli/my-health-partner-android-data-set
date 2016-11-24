@@ -26,6 +26,8 @@ public class MainController {
         this.context = context;
 
         dao = new AccelerometerDAO(context);
+
+        dao.open();
     }
 
     /**
@@ -34,7 +36,7 @@ public class MainController {
      * @param duration The duration of the acquisition.
      * @param activity The sport activity performed during the acquisition.
      */
-    public void startAcquisition(int duration, int activity) {
+    public void startAcquisition(long duration, int activity) {
         if (!AccelerometerService.isRunning()) {
             Intent intent = new Intent(context, AccelerometerService.class);
             intent.putExtra("duration", duration);
@@ -54,19 +56,20 @@ public class MainController {
      * Send the stored data to the server, then delete it.
      */
     public void sendAcquisition() {
-        dao.open();
         List<AccelerometerData> datas = dao.getDatas();
         // TODO : implement client-server communication.
-        dao.close();
     }
 
     /**
      * Delete the stored data.
      */
     public void DeleteAcquisition() {
-        dao.open();
         dao.deleteDatas();
-        dao.close();
+    }
+
+    public List<AccelerometerData> getDatas() {
+        List<AccelerometerData> datas = dao.getDatas();
+        return datas;
     }
 
     @Override

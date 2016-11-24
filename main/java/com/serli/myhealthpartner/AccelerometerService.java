@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 
 import com.serli.myhealthpartner.model.AccelerometerDAO;
 
@@ -44,8 +45,8 @@ public class AccelerometerService extends Service {
             float x = sensorEvent.values[0];
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
-            long timestamp = sensorEvent.timestamp * 1000000;
-            dao.addEntry(x, y, z, timestamp);
+            long timestamp = System.currentTimeMillis() - SystemClock.elapsedRealtime() + sensorEvent.timestamp / 1000000;
+            dao.addEntry(x, y, z, timestamp, activity);
         }
 
         @Override
@@ -104,7 +105,6 @@ public class AccelerometerService extends Service {
                 stopAcquisition();
             }
         }, duration);
-
     }
 
     /**
