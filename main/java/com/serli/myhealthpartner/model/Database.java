@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Database where we store user's profile information and acceleremoter data
+ */
 public class Database extends SQLiteOpenHelper {
 
     public final static int VERSION = 1;
@@ -22,10 +25,17 @@ public class Database extends SQLiteOpenHelper {
     public final static String ACC_Z = "Z_pos";
     public final static String ACC_ACTIVITY = "Activity";
 
+    /**
+     * @param context The context where the class is called
+     */
     public Database(Context context) {
         super(context, "myDB", null, VERSION);
     }
 
+    /**
+     * Tables creation
+     * @param sqLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_PROFILE_TABLE = "CREATE TABLE " + PROFILE_TABLE + " ("
@@ -46,6 +56,12 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_ACC_TABLE);
     }
 
+    /**
+     * Tables update (Drop + Creation)
+     * @param sqLiteDatabase
+     * @param i
+     * @param i1
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         String DROP_PROFILE_TABLE = "DROP TABLE IF EXISTS " + PROFILE_TABLE + ";";
