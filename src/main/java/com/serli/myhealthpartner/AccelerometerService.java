@@ -34,7 +34,6 @@ public class AccelerometerService extends Service {
     private final Messenger messenger = new Messenger(new IncomingMessageHandler());
     private Messenger clientMessenger = null;
 
-
     private SoundPool soundPool;
     private int soundID;
 
@@ -43,6 +42,7 @@ public class AccelerometerService extends Service {
     private AccelerometerDAO dao;
 
     private int activity;
+    private long duration;
 
     private Handler handler = new Handler();
 
@@ -60,6 +60,20 @@ public class AccelerometerService extends Service {
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
+        }
+    };
+
+    private Runnable startRun = new Runnable() {
+        @Override
+        public void run() {
+            startAcquisition(duration);
+        }
+    };
+
+    private Runnable stopRun = new Runnable() {
+        @Override
+        public void run() {
+            stopAcquisition();
         }
     };
 
@@ -84,7 +98,7 @@ public class AccelerometerService extends Service {
 
         activity = intent.getIntExtra("activity", 0);
 
-        final long duration = intent.getLongExtra("duration", 0);
+        duration = intent.getLongExtra("duration", 0);
 
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
@@ -100,12 +114,7 @@ public class AccelerometerService extends Service {
                     }
                 }
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startAcquisition(duration);
-                    }
-                }, 2000);
+                handler.postDelayed(startRun, 2000);
             }
         });
         return START_NOT_STICKY;
@@ -119,12 +128,7 @@ public class AccelerometerService extends Service {
     private void startAcquisition(long duration) {
         sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                stopAcquisition();
-            }
-        }, duration);
+        handler.postDelayed(stopRun, duration);
     }
 
     /**
@@ -145,6 +149,9 @@ public class AccelerometerService extends Service {
 
     @Override
     public void onDestroy() {
+        handler.removeCallbacks(startRun);
+        handler.removeCallbacks(stopRun);
+        soundPool.release();
         sensorManager.unregisterListener(sensorEventListener, accelerometerSensor);
         dao.close();
         isRunning = false;
