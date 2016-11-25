@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name" translatable="false">MyHealthPartner</string>
     <string name="title_activity_main" translatable="false">My Health Partner</string>
-    <string name="action_profile">Profile</string>
     <string name="title_activity_profile">Profile</string>
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>
     <string name="button_update">Update</string>
+    <string name="button_clear">Clear</string>
+    <string name="action_profile">Profile</string>
     <string name="action_show_datas">Show datas</string>
     <string name="text_weight">Weight (kg)</string>
     <string name="text_height">Height (cm)</string>

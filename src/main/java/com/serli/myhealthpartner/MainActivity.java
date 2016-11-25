@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sport_activity));
         activitySpinner.setAdapter(stringArrayAdapter);
 
-        startStopButton = (Button) findViewById(R.id.start_stop_button);
+        startStopButton = (Button) findViewById(R.id.button_start_stop);
         startStopButton.setOnClickListener(this);
         if (acquisitionStarted)
             startStopButton.setText(R.string.button_stop);
@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button updateButton = (Button) findViewById(R.id.button_update);
         updateButton.setOnClickListener(this);
+
+        Button clearButton = (Button) findViewById(R.id.button_clear);
+        clearButton.setOnClickListener(this);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.start_stop_button) {
+        if (view.getId() == R.id.button_start_stop) {
             if (acquisitionStarted) {
                 doUnbindService();
                 controller.stopAcquisition();
@@ -129,8 +132,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.button_update) {
             populateDataListView();
         }
+        if (view.getId() == R.id.button_clear) {
+            controller.DeleteAcquisition();
+        }
     }
 
+    /**
+     * Ask the controller for the accelerometer data stored in the database and display them in a
+     * listView.
+     */
     private void populateDataListView() {
         ListView listView = (ListView) findViewById(R.id.data_list_view);
         final List<AccelerometerData> datas = controller.getDatas();
@@ -211,6 +221,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Handle message incoming from {@link AccelerometerService}.
+     */
     private class IncomingMessageHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {

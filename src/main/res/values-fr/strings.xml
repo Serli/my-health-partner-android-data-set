@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="action_profile">Profil</string>
     <string name="title_activity_profile">Profil</string>
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>
     <string name="button_update">Actualiser</string>
+    <string name="button_clear">Clear</string>
+    <string name="action_profile">Profil</string>
     <string name="action_show_datas">Afficher les données</string>
+    <string name="text_birthday">Date de naissance</string>
+    <string name="text_gender">Sexe</string>
+    <string name="text_height">Taille (cm)</string>
+    <string name="text_weight">Poids (kg)</string>
 
     <string-array name="sport_activity">
         <item>Marche</item>
@@ -18,9 +23,5 @@
         <item>Homme</item>
         <item>Femme</item>
     </string-array>
-    <string name="text_birthday">Date de naissance</string>
-    <string name="text_gender">Sexe</string>
-    <string name="text_height">Taille (cm)</string>
-    <string name="text_weight">Poids (kg)</string>
 
 </resources>

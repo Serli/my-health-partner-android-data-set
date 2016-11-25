@@ -38,7 +38,7 @@
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/start_stop_button"
+        android:layout_above="@+id/button_start_stop"
         android:layout_centerHorizontal="true"
         android:id="@+id/activity_spinner" />
 
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/start_stop_button" />
+        android:id="@+id/button_start_stop" />
 
     <RelativeLayout
         android:id="@+id/data_list_layout"
@@ -70,6 +70,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:id="@+id/button_update" />
+
+        <Button
+            android:text="@string/button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_clear"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/button_update" />
     </RelativeLayout>
 
 </RelativeLayout>
