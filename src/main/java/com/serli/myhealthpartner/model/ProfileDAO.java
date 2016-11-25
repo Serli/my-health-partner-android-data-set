@@ -69,14 +69,16 @@ public class ProfileDAO {
     }
 
     private ProfileData cursorToData(Cursor cursor) {
-        ProfileData prof_data = new ProfileData();
-        prof_data.setSize(cursor.getInt(1));
-        prof_data.setWeight(cursor.getInt(2));
+        ProfileData prof_data = null;
+        if (!cursor.isAfterLast()) {
+            prof_data = new ProfileData();
+            prof_data.setSize(cursor.getInt(1));
+            prof_data.setWeight(cursor.getInt(2));
 
-        Date d = new Date(cursor.getLong(3));
-        prof_data.setBirthday(d);
-        prof_data.setSex(cursor.getInt(4));
-
+            Date d = new Date(cursor.getLong(3));
+            prof_data.setBirthday(d);
+            prof_data.setSex(cursor.getInt(4));
+        }
         return prof_data;
     }
 
