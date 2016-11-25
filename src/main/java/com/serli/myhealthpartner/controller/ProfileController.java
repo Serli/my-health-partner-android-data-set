@@ -31,6 +31,9 @@ public class ProfileController {
      * @return The profile stored in the database or null if none exist.
      */
     public ProfileData getProfile() {
+        if (profile == null) {
+            profile = dao.getProfile();
+        }
         return profile;
     }
 

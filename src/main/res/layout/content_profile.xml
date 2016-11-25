@@ -12,99 +12,104 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.serli.myhealthpartner.ProfileActivity"
     tools:showIn="@layout/activity_profile">
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:id="@+id/textView2"
-        android:gravity="left"
-        android:layout_above="@+id/textView3"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:elevation="1dp"
-        android:padding="15dp" />
 
     <TextView
-        android:text="TextView"
+        android:text="@string/text_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/textView2"
-        android:padding="15dp"
-        android:gravity="left"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        android:paddingTop="10dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:layout_alignParentStart="true"
-        android:textColor="#00F"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
+        android:id="@+id/textView_weight"
         android:gravity="left"
         android:padding="15dp"
         android:paddingTop="5dp"
-        android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/textView3" />
+        android:layout_below="@+id/textView_height"
+        android:layout_alignRight="@+id/textView_height" />
+
+    <TextView
+        android:text="@string/text_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_height"
+        android:padding="15dp"
+        android:gravity="left"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/textView_gender"
+        android:layout_alignStart="@+id/textView_gender" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_gender"
         android:gravity="left"
         android:padding="15dp"
         android:paddingTop="10dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_above="@+id/textView_height"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView_gender"
+        android:layout_toEndOf="@+id/textView_gender" />
 
-    <EditText
+    <TextView
+        android:text="@string/text_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-
-        android:ems="10"
-        android:id="@+id/editText"
-        android:autoText="false"
+        android:id="@+id/textView_gender"
         android:gravity="left"
-        tools:ignore="UnknownId"
-        android:layout_alignBottom="@+id/textView2"
+        android:elevation="1dp"
+        android:padding="15dp"
+        android:layout_marginTop="42dp"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:hint="170"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_above="@+id/textView_weight"
+        android:id="@+id/editText_height"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView_weight" />
+
+    <EditText
+        android:hint="60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText_weight"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView_weight"
+        android:layout_alignBottom="@+id/textView_weight" />
+
+    <TextView
+        android:text="@string/text_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_birthday"
+        android:gravity="left"
+        android:padding="15dp"
+        android:paddingTop="5dp"
+        android:maxWidth="100dp"
+        android:layout_alignBottom="@+id/datePicker_birthday"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="66dp" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker_birthday"
+        style="@android:style/Widget.DatePicker"
+        android:layout_marginEnd="19dp"
+        android:layout_below="@+id/editText_weight"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="26dp" />
 
     <Button
-        android:text="OK"
+        android:text="Validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/editText4"
-        android:editable="true"
-        android:gravity="left"
-        android:text="dd.mm.yyyy"
-        android:textAllCaps="true"
-        android:layout_below="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
+        android:id="@+id/button_validate"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
