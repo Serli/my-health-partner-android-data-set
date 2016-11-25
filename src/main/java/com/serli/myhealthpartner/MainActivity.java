@@ -129,11 +129,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        if (view.getId() == R.id.button_update) {
+        if (view.getId() == R.id.button_update || view.getId() == R.id.button_clear) {
+            if (view.getId() == R.id.button_clear) {
+                controller.DeleteAcquisition();
+            }
             populateDataListView();
-        }
-        if (view.getId() == R.id.button_clear) {
-            controller.DeleteAcquisition();
         }
     }
 
