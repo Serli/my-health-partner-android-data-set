@@ -15,7 +15,11 @@ import com.serli.myhealthpartner.model.ProfileData;
 
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * View of Profile Activity.<br/>
+ * allow the usr to Inform his profile (gender, Birthday, Height and weight)<br/>
+ * *  this information will be used to Calculates calories burned <br/>
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private ProfileController controller;

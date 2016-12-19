@@ -32,7 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * View of the main activity.
+ * View of the main activity..<br/>
+ * in this view we allow the user choose de duration and type  of his activity
  */
 // TODO : Add send and delete acquisition.
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ServiceConnection {
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
         serviceMessenger = new Messenger(iBinder);
         try {
-            Message msg = Message.obtain(null, AccelerometerService.msgRegisterClient );
+            Message msg = Message.obtain(null, AccelerometerService.MSG_REGISTER_CLIENT  );
             msg.replyTo = messenger;
             serviceMessenger.send(msg);
         } catch (RemoteException e) {
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (serviceBound) {
             if (serviceMessenger != null) {
                 try {
-                    Message msg = Message.obtain(null, AccelerometerService.msgUnregistredClient );
+                    Message msg = Message.obtain(null, AccelerometerService.MSG_UNREGISTER_CLIENT  );
                     msg.replyTo = messenger;
                     serviceMessenger.send(msg);
                 } catch (RemoteException e) {
@@ -228,11 +229,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case AccelerometerService.msgAcquisitionSart :
+                case AccelerometerService.MSG_ACQUISITION_START  :
                     acquisitionStarted = true;
                     startStopButton.setText(R.string.button_stop);
                     break;
-                case AccelerometerService.msgAcquisitionStop :
+                case AccelerometerService.MSG_ACQUISITION_STOP  :
                     doUnbindService();
                     acquisitionStarted = false;
                     startStopButton.setText(R.string.button_start);

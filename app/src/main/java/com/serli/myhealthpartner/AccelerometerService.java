@@ -26,10 +26,11 @@ import com.serli.myhealthpartner.model.AccelerometerDAO;
  */
 public class AccelerometerService extends Service {
 
-    public static final int msgRegisterClient = 1;
-    public static final int msgUnregistredClient = 2;
-    public static final int msgAcquisitionSart = 3;
-    public static final int msgAcquisitionStop = 4;
+    public static final int MSG_REGISTER_CLIENT = 1;
+    public static final int MSG_UNREGISTER_CLIENT = 2;
+    public static final int MSG_ACQUISITION_START = 3;
+    public static final int MSG_ACQUISITION_STOP = 4;
+
 
     private final Messenger messenger = new Messenger(new IncomingMessageHandler());
     private Messenger clientMessenger = null;
@@ -77,6 +78,9 @@ public class AccelerometerService extends Service {
         }
     };
 
+    /**
+     * the methode onCreate is called when the activity AccelerometreService is first created
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -92,6 +96,10 @@ public class AccelerometerService extends Service {
         dao = new AccelerometerDAO(this);
     }
 
+    /**
+     * the methode onStartCommand is called from the alarm, it schedules a new alarm for N minutes later, and spawns a thread to do its networking.
+     * * @return START_NOT_STICKY Constant to return from onStartCommand(Intent, int, int): if this service's process is killed while it is started, and there are no new start intents to deliver to it.
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         dao.open();
@@ -107,7 +115,7 @@ public class AccelerometerService extends Service {
 
                 if (clientMessenger != null) {
                     try {
-                        Message msg = Message.obtain(null, msgAcquisitionSart);
+                        Message msg = Message.obtain(null, MSG_ACQUISITION_START );
                         msg.replyTo = messenger;
                         clientMessenger.send(msg);
                     } catch (RemoteException e) {
@@ -138,7 +146,7 @@ public class AccelerometerService extends Service {
         soundPool.play(soundID, 1, 1, 1, 0, 1);
         if (clientMessenger != null) {
             try {
-                Message msg = Message.obtain(null, msgAcquisitionStop );
+                Message msg = Message.obtain(null, MSG_ACQUISITION_STOP  );
                 msg.replyTo = messenger;
                 clientMessenger.send(msg);
             } catch (RemoteException e) {
@@ -147,6 +155,9 @@ public class AccelerometerService extends Service {
         AccelerometerService.this.stopSelf();
     }
 
+    /**
+     * The final call  receive before the activity is destroyed..
+     */
     @Override
     public void onDestroy() {
         handler.removeCallbacks(startRun);
@@ -176,10 +187,10 @@ public class AccelerometerService extends Service {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case msgRegisterClient :
+                case MSG_REGISTER_CLIENT  :
                     clientMessenger = msg.replyTo;
                     break;
-                case msgUnregistredClient :
+                case MSG_UNREGISTER_CLIENT  :
                     clientMessenger = null;
                     break;
                 default:
