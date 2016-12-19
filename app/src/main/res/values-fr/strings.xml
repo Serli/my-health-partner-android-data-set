@@ -3,7 +3,7 @@
 
     <string name="title_activity_profile">Profil</string>
     <string name="button_start">Start</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">Stop</string> 
     <string name="button_update">Actualiser</string>
     <string name="button_clear">Clear</string>
     <string name="action_profile">Profil</string>
