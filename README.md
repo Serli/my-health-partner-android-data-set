@@ -3,4 +3,4 @@ This project a mobile application which collects acceleremoter's data and send i
 To get the project, create a new Android Studio Project :
 File -> New -> Project From Version Control -> GitHub
 
-Here is the Git Repository URL that is required : https://github.com/Serli/my-health-partner-android.git
+Here is the Git Repository URL : https://github.com/Serli/my-health-partner-android.git
