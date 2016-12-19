@@ -26,10 +26,10 @@ import com.serli.myhealthpartner.model.AccelerometerDAO;
  */
 public class AccelerometerService extends Service {
 
-    public static final int MSG_REGISTER_CLIENT = 1;
-    public static final int MSG_UNREGISTER_CLIENT = 2;
-    public static final int MSG_ACQUISITION_START = 3;
-    public static final int MSG_ACQUISITION_STOP = 4;
+    public static final int msgRegisterClient = 1;
+    public static final int msgUnregistredClient = 2;
+    public static final int msgAcquisitionSart = 3;
+    public static final int msgAcquisitionStop = 4;
 
     private final Messenger messenger = new Messenger(new IncomingMessageHandler());
     private Messenger clientMessenger = null;
@@ -107,7 +107,7 @@ public class AccelerometerService extends Service {
 
                 if (clientMessenger != null) {
                     try {
-                        Message msg = Message.obtain(null, MSG_ACQUISITION_START);
+                        Message msg = Message.obtain(null, msgAcquisitionSart);
                         msg.replyTo = messenger;
                         clientMessenger.send(msg);
                     } catch (RemoteException e) {
@@ -138,7 +138,7 @@ public class AccelerometerService extends Service {
         soundPool.play(soundID, 1, 1, 1, 0, 1);
         if (clientMessenger != null) {
             try {
-                Message msg = Message.obtain(null, MSG_ACQUISITION_STOP);
+                Message msg = Message.obtain(null, msgAcquisitionStop );
                 msg.replyTo = messenger;
                 clientMessenger.send(msg);
             } catch (RemoteException e) {
@@ -176,10 +176,10 @@ public class AccelerometerService extends Service {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MSG_REGISTER_CLIENT:
+                case msgRegisterClient :
                     clientMessenger = msg.replyTo;
                     break;
-                case MSG_UNREGISTER_CLIENT:
+                case msgUnregistredClient :
                     clientMessenger = null;
                     break;
                 default:

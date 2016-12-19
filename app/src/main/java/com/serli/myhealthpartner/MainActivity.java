@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
         serviceMessenger = new Messenger(iBinder);
         try {
-            Message msg = Message.obtain(null, AccelerometerService.MSG_REGISTER_CLIENT);
+            Message msg = Message.obtain(null, AccelerometerService.msgRegisterClient );
             msg.replyTo = messenger;
             serviceMessenger.send(msg);
         } catch (RemoteException e) {
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (serviceBound) {
             if (serviceMessenger != null) {
                 try {
-                    Message msg = Message.obtain(null, AccelerometerService.MSG_UNREGISTER_CLIENT);
+                    Message msg = Message.obtain(null, AccelerometerService.msgUnregistredClient );
                     msg.replyTo = messenger;
                     serviceMessenger.send(msg);
                 } catch (RemoteException e) {
@@ -228,11 +228,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case AccelerometerService.MSG_ACQUISITION_START:
+                case AccelerometerService.msgAcquisitionSart :
                     acquisitionStarted = true;
                     startStopButton.setText(R.string.button_stop);
                     break;
-                case AccelerometerService.MSG_ACQUISITION_STOP:
+                case AccelerometerService.msgAcquisitionStop :
                     doUnbindService();
                     acquisitionStarted = false;
                     startStopButton.setText(R.string.button_start);

@@ -20,11 +20,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ProfileController controller;
 
-    private Spinner spinner_gender;
+    private Spinner spinnerGender;
     private String[] gender;
-    private EditText editText_height;
-    private EditText editText_weight;
-    private DatePicker datePicker_birthday;
+    private EditText editTextHeight;
+    private EditText editTextWeight;
+    private DatePicker datePickerBirthday;
     ProfileData profile;
 
     @Override
@@ -41,23 +41,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         gender = getResources().getStringArray(R.array.gender);
 
-        spinner_gender = (Spinner) findViewById(R.id.spinner_gender);
-        editText_height = (EditText) findViewById(R.id.editText_height);
-        editText_weight = (EditText) findViewById(R.id.editText_weight);
-        datePicker_birthday = (DatePicker) findViewById(R.id.datePicker_birthday);
+        spinnerGender = (Spinner) findViewById(R.id.spinner_gender);
+        editTextHeight = (EditText) findViewById(R.id.editText_height);
+        editTextWeight = (EditText) findViewById(R.id.editText_weight);
+        datePickerBirthday = (DatePicker) findViewById(R.id.datePicker_birthday);
 
 
         if (controller.getProfile() != null) {
             profile = controller.getProfile();
 
-            spinner_gender.setSelection(profile.getSex());
-            editText_height.setText(String.valueOf(profile.getSize()));
-            editText_weight.setText(String.valueOf(profile.getWeight()));
+            spinnerGender.setSelection(profile.getSex());
+            editTextHeight.setText(String.valueOf(profile.getSize()));
+            editTextWeight.setText(String.valueOf(profile.getWeight()));
 
             Date d = profile.getBirthday();
             Calendar calendar_tmp = Calendar.getInstance();
             calendar_tmp.setTime(d);
-            datePicker_birthday.updateDate(calendar_tmp.get(Calendar.YEAR), calendar_tmp.get(Calendar.MONTH), calendar_tmp.get(Calendar.DAY_OF_MONTH));
+            datePickerBirthday.updateDate(calendar_tmp.get(Calendar.YEAR), calendar_tmp.get(Calendar.MONTH), calendar_tmp.get(Calendar.DAY_OF_MONTH));
         }
 
 
@@ -65,13 +65,13 @@ public class ProfileActivity extends AppCompatActivity {
         button_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profile.setSex(spinner_gender.getSelectedItemPosition());
-                profile.setSize(Integer.parseInt(editText_height.getText().toString()));
-                profile.setWeight(Integer.parseInt(editText_weight.getText().toString()));
+                profile.setSex(spinnerGender.getSelectedItemPosition());
+                profile.setSize(Integer.parseInt(editTextHeight.getText().toString()));
+                profile.setWeight(Integer.parseInt(editTextWeight.getText().toString()));
 
-                int day = datePicker_birthday.getDayOfMonth();
-                int month = datePicker_birthday.getMonth();
-                int year = datePicker_birthday.getYear();
+                int day = datePickerBirthday.getDayOfMonth();
+                int month = datePickerBirthday.getMonth();
+                int year = datePickerBirthday.getYear();
 
                 Calendar calendar_birthday = Calendar.getInstance();
                 calendar_birthday.set(year, month, day);
@@ -85,6 +85,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gender);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_gender.setAdapter(adapter);
+        spinnerGender.setAdapter(adapter);
     }
 }
