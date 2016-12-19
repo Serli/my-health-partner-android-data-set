@@ -19,6 +19,9 @@
         <item>Fast walk</item>
         <item>Run</item>
         <item>Fast run</item>
+        <item>Trekking</item>
+        <item>Hiking</item>
+        <item>Inactive</item>
     </string-array>
     <string-array name="gender">
         <item>Man</item>
