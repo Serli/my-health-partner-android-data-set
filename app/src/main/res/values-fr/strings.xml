@@ -3,7 +3,7 @@
 
     <string name="title_activity_profile">Profil</string>
     <string name="button_start">Start</string>
-    <string name="button_stop">Stop</string> 
+    <string name="button_stop">Stop</string>
     <string name="button_update">Actualiser</string>
     <string name="button_clear">Clear</string>
     <string name="action_profile">Profil</string>
@@ -18,6 +18,9 @@
         <item>Marche rapide</item>
         <item>Course</item>
         <item>Course rapide</item>
+        <item>Trekking</item>
+        <item>Randonnée</item>
+        <item>Inactif</item>
     </string-array>
     <string-array name="gender">
         <item>Homme</item>
