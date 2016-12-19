@@ -59,7 +59,7 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:hint="170"
+        android:hint="@string/hint_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -70,7 +70,7 @@
         android:layout_toEndOf="@+id/textView_weight" />
 
     <EditText
-        android:hint="60"
+        android:hint="@string/hint_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"

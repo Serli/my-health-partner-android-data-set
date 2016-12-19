@@ -12,4 +12,6 @@
     <string name="text_height">Height (cm)</string>
     <string name="text_gender">Gender</string>
     <string name="text_birthday">Birthday</string>
+    <string name="hint_height" translatable="false">170</string>
+    <string name="hint_weight" translatable="false">60</string>
 </resources>
