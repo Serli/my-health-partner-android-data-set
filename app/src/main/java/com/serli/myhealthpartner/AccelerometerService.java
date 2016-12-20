@@ -122,7 +122,7 @@ public class AccelerometerService extends Service {
                     }
                 }
 
-                handler.postDelayed(startRun, 2000);
+                handler.postDelayed(startRun, AccelerometerService.this.getResources().getInteger(R.integer.start_delay));
             }
         });
         return START_NOT_STICKY;
