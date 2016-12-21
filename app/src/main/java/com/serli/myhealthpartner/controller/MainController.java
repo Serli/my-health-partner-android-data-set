@@ -56,7 +56,7 @@ public class MainController {
      * Send the stored data to the server, then delete it.
      */
     public void sendAcquisition() {
-        List<AccelerometerData> datas = dao.getDatas();
+        List<AccelerometerData> data = dao.getData();
         // TODO : implement client-server communication.
     }
 
@@ -64,12 +64,12 @@ public class MainController {
      * Delete the stored data.
      */
     public void DeleteAcquisition() {
-        dao.deleteDatas();
+        dao.deleteData();
     }
 
-    public List<AccelerometerData> getDatas() {
-        List<AccelerometerData> datas = dao.getDatas();
-        return datas;
+    public List<AccelerometerData> getData() {
+        List<AccelerometerData> data = dao.getData();
+        return data;
     }
 
     @Override

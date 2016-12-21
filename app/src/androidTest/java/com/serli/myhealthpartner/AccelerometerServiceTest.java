@@ -41,9 +41,9 @@ public class AccelerometerServiceTest {
         Assert.assertFalse("Service is not stopped when stopService is called", AccelerometerService.isRunning());
     }
 
-    private void waitForServiceState(boolean state, int max) {
+    private void waitForServiceState(boolean state, int maxDelay) {
         int cpt = 0;
-        while (AccelerometerService.isRunning() != state && ++cpt < max / 10) {
+        while (AccelerometerService.isRunning() != state && ++cpt < maxDelay / 10) {
             putDelay(10);
         }
     }

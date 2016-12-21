@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,6 +31,7 @@ import com.serli.myhealthpartner.model.AccelerometerData;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * View of the main activity..<br/>
@@ -144,20 +146,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void populateDataListView() {
         ListView listView = (ListView) findViewById(R.id.data_list_view);
-        final List<AccelerometerData> datas = controller.getDatas();
-        ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, android.R.id.text1, datas) {
+        final List<AccelerometerData> dataList = controller.getData();
+        ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, android.R.id.text1, dataList) {
+            @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
 
-                AccelerometerData data = datas.get(position);
+                AccelerometerData data = dataList.get(position);
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss,S");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss,S", Locale.getDefault());
 
                 text1.setText(dateFormat.format(new Timestamp(data.getTimestamp())));
-                text2.setText(String.format("x=%1$.2f y=%2$.2f z=%3$.2f ", data.getX(), data.getY(), data.getZ()) + MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]);
+                text2.setText(String.format(Locale.getDefault(), "x=%1$.2f y=%2$.2f z=%3$.2f %4", data.getX(), data.getY(), data.getZ(), MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]));
 
                 return view;
             }
@@ -179,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             msg.replyTo = messenger;
             serviceMessenger.send(msg);
         } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
@@ -215,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     msg.replyTo = messenger;
                     serviceMessenger.send(msg);
                 } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
             }
             unbindService(this);

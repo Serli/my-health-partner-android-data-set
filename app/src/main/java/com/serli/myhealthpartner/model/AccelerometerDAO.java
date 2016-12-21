@@ -15,7 +15,7 @@ public class AccelerometerDAO {
 
     private Database database;
     private SQLiteDatabase db;
-    private String[] allColumns = {database.ACC_TSTMP, database.ACC_X, database.ACC_Y, database.ACC_Z, database.ACC_ACTIVITY};
+    private String[] allColumns = {Database.ACC_TSTMP, Database.ACC_X, Database.ACC_Y, Database.ACC_Z, Database.ACC_ACTIVITY};
 
     /**
      * @param context The context where the dao is called
@@ -49,13 +49,13 @@ public class AccelerometerDAO {
      */
     public void addEntry(float x, float y, float z, long timestamp, int activity) {
         ContentValues values = new ContentValues();
-        values.put(database.ACC_TSTMP, timestamp);
-        values.put(database.ACC_X, x);
-        values.put(database.ACC_Y, y);
-        values.put(database.ACC_Z, z);
-        values.put(database.ACC_ACTIVITY, activity);
+        values.put(Database.ACC_TSTMP, timestamp);
+        values.put(Database.ACC_X, x);
+        values.put(Database.ACC_Y, y);
+        values.put(Database.ACC_Z, z);
+        values.put(Database.ACC_ACTIVITY, activity);
 
-        db.insert(database.ACC_TABLE, null, values);
+        db.insert(Database.ACC_TABLE, null, values);
     }
 
     /**
@@ -63,36 +63,36 @@ public class AccelerometerDAO {
      *
      * @return The accelerometer data.
      */
-    public List<AccelerometerData> getDatas() {
+    public List<AccelerometerData> getData() {
 
-        List<AccelerometerData> acce_data_list = new ArrayList<AccelerometerData>();
-        Cursor cursor = db.query(database.ACC_TABLE,
+        List<AccelerometerData> acc_data_list = new ArrayList<>();
+        Cursor cursor = db.query(Database.ACC_TABLE,
                 allColumns, null, null, null, null, Database.ACC_TSTMP + " DESC");
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            AccelerometerData acce_data = cursorToData(cursor);
-            acce_data_list.add(acce_data);
+            AccelerometerData acc_data = cursorToData(cursor);
+            acc_data_list.add(acc_data);
             cursor.moveToNext();
         }
-        return acce_data_list;
+        return acc_data_list;
     }
 
     /**
      * Delete the accelerometer data in the accelerometer data table
      */
-    public void deleteDatas() {
-        db.delete(database.ACC_TABLE, null , null);
+    public void deleteData() {
+        db.delete(Database.ACC_TABLE, null, null);
     }
 
     private AccelerometerData cursorToData(Cursor cursor) {
-        AccelerometerData acce_data = new AccelerometerData();
-        acce_data.setTimestamp(cursor.getLong(0));
-        acce_data.setX(cursor.getFloat(1));
-        acce_data.setY(cursor.getFloat(2));
-        acce_data.setZ(cursor.getFloat(3));
-        acce_data.setActivity(cursor.getInt(4));
+        AccelerometerData acc_data = new AccelerometerData();
+        acc_data.setTimestamp(cursor.getLong(0));
+        acc_data.setX(cursor.getFloat(1));
+        acc_data.setY(cursor.getFloat(2));
+        acc_data.setZ(cursor.getFloat(3));
+        acc_data.setActivity(cursor.getInt(4));
 
-        return acce_data;
+        return acc_data;
     }
 }
