@@ -12,7 +12,12 @@
     <string name="text_gender">Gender</string>
     <string name="text_height">Height (cm)</string>
     <string name="text_weight">Weigth (kg)</string>
-
+    <string name="sending_data_message"> Do you want to send the accelerometer data ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="acquisition_sent">Acquisition sent</string>
+    <string name="acquisition_deleted">Acquisition deleted</string>
+    <string name="url_server">URL SERVER</string>
 
     <string-array name="sport_activity">
         <item>Walk</item>

@@ -14,4 +14,10 @@
     <string name="text_birthday">Birthday</string>
     <string name="hint_height" translatable="false">170</string>
     <string name="hint_weight" translatable="false">60</string>
+    <string name="sending_data_message"> Do you want to send the accelerometer data ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="acquisition_sent">Acquisition sent</string>
+    <string name="acquisition_deleted">Acquisition deleted</string>
+    <string name="url_server">URL SERVER</string>
 </resources>

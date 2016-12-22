@@ -1,9 +1,18 @@
 package com.serli.myhealthpartner.controller;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.widget.Toast;
 
+import com.serli.myhealthpartner.model.AccelerometerData;
 import com.serli.myhealthpartner.model.ProfileDAO;
 import com.serli.myhealthpartner.model.ProfileData;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Controller for the profile.
@@ -35,6 +44,21 @@ public class ProfileController {
             profile = dao.getProfile();
         }
         return profile;
+    }
+
+    public void sendProfile(PostTo post) {
+        Call<ProfileData> callProfile = post.sendProfileData(getProfile());
+        callProfile.enqueue(new Callback<ProfileData>() {
+            @Override
+            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                // SEND PROFILE OK !
+            }
+
+            @Override
+            public void onFailure(Call<ProfileData> call, Throwable t) {
+                // SEND PROFILE KO !
+            }
+        });
     }
 
     /**

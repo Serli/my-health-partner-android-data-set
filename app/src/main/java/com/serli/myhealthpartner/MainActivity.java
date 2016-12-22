@@ -1,7 +1,9 @@
 package com.serli.myhealthpartner;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -24,14 +26,24 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.serli.myhealthpartner.controller.MainController;
+import com.serli.myhealthpartner.controller.PostTo;
+import com.serli.myhealthpartner.controller.ProfileController;
 import com.serli.myhealthpartner.model.AccelerometerData;
+import com.serli.myhealthpartner.model.ProfileData;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * View of the main activity..<br/>
@@ -124,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 controller.stopAcquisition();
                 startStopButton.setText(R.string.button_start);
                 acquisitionStarted = false;
+                displayAlertDialog();
             } else {
                 long duration = minutePicker.getValue() * 60000L + secondPicker.getValue() * 1000L;
                 if (duration > 0) {
@@ -242,10 +255,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     doUnbindService();
                     acquisitionStarted = false;
                     startStopButton.setText(R.string.button_start);
+                    displayAlertDialog();
                     break;
                 default:
                     super.handleMessage(msg);
             }
         }
+    }
+
+    /**
+     * Asks user if he wants to send accelerometer data acquired to the database
+     */
+    private void displayAlertDialog(){;
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.sending_data_message);
+        alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // sendData(); ==> A EFFECTUER DES QUE LA VERITABLE URL DE L'ACCES AU SERVEUR EST VALIDE !
+                Toast.makeText(MainActivity.this, R.string.acquisition_sent,Toast.LENGTH_LONG).show();
+            }
+        });
+        alertDialogBuilder.setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                controller.DeleteAcquisition();
+                Toast.makeText(MainActivity.this, R.string.acquisition_deleted, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * To send data to the server (profile & accelerometer data)
+     */
+    private void sendData(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(String.valueOf(R.string.url_server))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        PostTo post = retrofit.create(PostTo.class);
+
+        ProfileController controllerProfile = new ProfileController(this);
+        controllerProfile.sendProfile(post);
+        controller.sendAcquisition(post);
     }
 }

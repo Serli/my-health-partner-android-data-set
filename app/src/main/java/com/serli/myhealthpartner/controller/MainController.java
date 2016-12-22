@@ -9,6 +9,10 @@ import com.serli.myhealthpartner.model.AccelerometerData;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Controller of the main view.
  */
@@ -55,9 +59,20 @@ public class MainController {
     /**
      * Send the stored data to the server, then delete it.
      */
-    public void sendAcquisition() {
+    public void sendAcquisition(PostTo post) {
         List<AccelerometerData> data = dao.getData();
-        // TODO : implement client-server communication.
+        Call<List<AccelerometerData>> callData = post.sendAccelerometerData(data);
+        callData.enqueue(new Callback<List<AccelerometerData>>() {
+            @Override
+            public void onResponse(Call<List<AccelerometerData>> call, Response<List<AccelerometerData>> response) {
+                // SEND ACQUISITION OK !
+            }
+
+            @Override
+            public void onFailure(Call<List<AccelerometerData>> call, Throwable t) {
+                // SEND ACQUISITION KO !
+            }
+        });
     }
 
     /**

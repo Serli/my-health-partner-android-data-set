@@ -1,5 +1,7 @@
 package com.serli.myhealthpartner;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -153,6 +155,7 @@ public class AccelerometerService extends Service {
             }
         }
         AccelerometerService.this.stopSelf();
+        //sendData();
     }
 
     /**

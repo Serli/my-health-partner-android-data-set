@@ -9,17 +9,26 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.serli.myhealthpartner.controller.ProfileController;
 import com.serli.myhealthpartner.model.ProfileData;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * View of Profile Activity.<br/>
  * allow the usr to Inform his profile (gender, Birthday, Height and weight)<br/>
  * *  this information will be used to Calculates calories burned <br/>
  */
+
 public class ProfileActivity extends AppCompatActivity {
 
     private ProfileController controller;
