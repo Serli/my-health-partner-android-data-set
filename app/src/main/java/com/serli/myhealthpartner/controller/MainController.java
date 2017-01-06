@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.serli.myhealthpartner.AccelerometerService;
+import com.serli.myhealthpartner.MainActivity;
+import com.serli.myhealthpartner.R;
 import com.serli.myhealthpartner.model.AccelerometerDAO;
 import com.serli.myhealthpartner.model.AccelerometerData;
 
@@ -12,6 +14,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Controller of the main view.
@@ -59,7 +63,15 @@ public class MainController {
     /**
      * Send the stored data to the server, then delete it.
      */
-    public void sendAcquisition(PostTo post) {
+    public void sendAcquisition() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(String.valueOf(R.string.url_server))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        PostTo post = retrofit.create(PostTo.class);
+        ProfileController controllerProfile = new ProfileController(context);
+        controllerProfile.sendProfile(post);
+
         List<AccelerometerData> data = dao.getData();
         Call<List<AccelerometerData>> callData = post.sendAccelerometerData(data);
         callData.enqueue(new Callback<List<AccelerometerData>>() {

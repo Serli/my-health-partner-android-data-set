@@ -7,64 +7,59 @@ import java.util.Date;
  */
 public class ProfileData {
 
+    private int id_profile;
+    private int IMEI;
+    private int height;
     private int weight;
-    private int size;
-    private int sex;
     private Date birthday;
+    private int gender;
 
-    /**
-     * @return The profile's birthday
-     */
+
+    public int getId_profile() {
+        return id_profile;
+    }
+
+    public void setId_profile(int id_profile) {
+        this.id_profile = id_profile;
+    }
+
+    public int getIMEI() {
+        return IMEI;
+    }
+
+    public void setIMEI(int IMEI) {
+        this.IMEI = IMEI;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     public Date getBirthday() {
         return birthday;
     }
 
-    /**
-     * @param birthday The profile's birthday
-     */
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
-    /**
-     * @return The profile's height
-     */
-    public int getSize() {
-        return size;
+    public int getGender() {
+        return gender;
     }
 
-    /**
-     * @param size The profile's height
-     */
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    /**
-     * @return The profile's gender
-     */
-    public int getSex() {
-        return sex;
-    }
-
-    /**
-     * @param sex The profile's gender
-     */
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    /**
-     * @return The profile's weight
-     */
-    public int getWeight() {
-        return weight;
-    }
-
-    /**
-     * @param weight The profile's weight
-     */
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

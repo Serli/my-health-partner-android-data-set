@@ -1,8 +1,10 @@
 package com.serli.myhealthpartner;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,8 +65,8 @@ public class ProfileActivity extends AppCompatActivity {
         if (controller.getProfile() != null) {
             profile = controller.getProfile();
 
-            spinnerGender.setSelection(profile.getSex());
-            editTextHeight.setText(String.valueOf(profile.getSize()));
+            spinnerGender.setSelection(profile.getGender());
+            editTextHeight.setText(String.valueOf(profile.getHeight()));
             editTextWeight.setText(String.valueOf(profile.getWeight()));
 
             Date d = profile.getBirthday();
@@ -78,8 +80,9 @@ public class ProfileActivity extends AppCompatActivity {
         button_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profile.setSex(spinnerGender.getSelectedItemPosition());
-                profile.setSize(Integer.parseInt(editTextHeight.getText().toString()));
+                profile.setId_profile(profile.getId_profile()+1);
+                profile.setGender(spinnerGender.getSelectedItemPosition());
+                profile.setHeight(Integer.parseInt(editTextHeight.getText().toString()));
                 profile.setWeight(Integer.parseInt(editTextWeight.getText().toString()));
 
                 int day = datePickerBirthday.getDayOfMonth();
@@ -90,6 +93,11 @@ public class ProfileActivity extends AppCompatActivity {
                 calendar_birthday.set(year, month, day);
 
                 profile.setBirthday(calendar_birthday.getTime());
+
+                TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                telephonyManager.getDeviceId();
+
+                profile.setIMEI(Integer.parseInt(telephonyManager.getDeviceId()));
 
                 controller.setProfile(profile);
                 finish();

@@ -29,21 +29,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serli.myhealthpartner.controller.MainController;
-import com.serli.myhealthpartner.controller.PostTo;
-import com.serli.myhealthpartner.controller.ProfileController;
 import com.serli.myhealthpartner.model.AccelerometerData;
-import com.serli.myhealthpartner.model.ProfileData;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * View of the main activity..<br/>
@@ -272,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // sendData(); ==> A EFFECTUER DES QUE LA VERITABLE URL DE L'ACCES AU SERVEUR EST VALIDE !
+                //controller.sendAcquisition(); ==> A EFFECTUER DES QUE LA VERITABLE URL DE L'ACCES AU SERVEUR EST VALIDE !
                 Toast.makeText(MainActivity.this, R.string.acquisition_sent,Toast.LENGTH_LONG).show();
             }
         });
@@ -286,20 +277,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    /**
-     * To send data to the server (profile & accelerometer data)
-     */
-    private void sendData(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(String.valueOf(R.string.url_server))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        PostTo post = retrofit.create(PostTo.class);
-
-        ProfileController controllerProfile = new ProfileController(this);
-        controllerProfile.sendProfile(post);
-        controller.sendAcquisition(post);
     }
 }

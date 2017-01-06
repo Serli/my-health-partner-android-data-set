@@ -14,7 +14,7 @@ public class ProfileDAO {
 
     private Database database;
     private SQLiteDatabase db;
-    private String[] allColumns = {database.PROFILE_ID, database.PROFILE_HEIGHT, database.PROFILE_WEIGHT, database.PROFILE_AGE, database.PROFILE_GENDER};
+    private String[] allColumns = {database.PROFILE_ID, database.PROFILE_IMEI, database.PROFILE_HEIGHT, database.PROFILE_WEIGHT, database.PROFILE_AGE, database.PROFILE_GENDER};
 
     /**
      * @param context The context where the dao is called.
@@ -44,14 +44,16 @@ public class ProfileDAO {
      * @param data The data object containing the profile information
      */
     public void addEntry(ProfileData data) {
-        if (data.getBirthday() != null && data.getSize() != 0 && data.getWeight() != 0) {
+        if (data.getBirthday() != null && data.getHeight() != 0 && data.getWeight() != 0 && data.getIMEI() != 0) {
             db.delete(Database.PROFILE_TABLE, null, null);
 
             ContentValues values = new ContentValues();
-            values.put(Database.PROFILE_HEIGHT, data.getSize());
+            values.put(Database.PROFILE_ID, data.getId_profile());
+            values.put(Database.PROFILE_IMEI, data.getIMEI());
+            values.put(Database.PROFILE_HEIGHT, data.getHeight());
             values.put(Database.PROFILE_WEIGHT, data.getWeight());
             values.put(Database.PROFILE_AGE, data.getBirthday().getTime());
-            values.put(Database.PROFILE_GENDER, data.getSex());
+            values.put(Database.PROFILE_GENDER, data.getGender());
 
             db.insert(Database.PROFILE_TABLE, null, values);
         }
@@ -72,12 +74,14 @@ public class ProfileDAO {
         ProfileData prof_data = null;
         if (!cursor.isAfterLast()) {
             prof_data = new ProfileData();
-            prof_data.setSize(cursor.getInt(1));
-            prof_data.setWeight(cursor.getInt(2));
+            prof_data.setId_profile(cursor.getInt(0));
+            prof_data.setIMEI(cursor.getInt(1));
+            prof_data.setHeight(cursor.getInt(2));
+            prof_data.setWeight(cursor.getInt(3));
 
-            Date d = new Date(cursor.getLong(3));
+            Date d = new Date(cursor.getLong(4));
             prof_data.setBirthday(d);
-            prof_data.setSex(cursor.getInt(4));
+            prof_data.setHeight(cursor.getInt(5));
         }
         return prof_data;
     }
