@@ -8,6 +8,7 @@ import com.serli.myhealthpartner.MainActivity;
 import com.serli.myhealthpartner.R;
 import com.serli.myhealthpartner.model.AccelerometerDAO;
 import com.serli.myhealthpartner.model.AccelerometerData;
+import com.serli.myhealthpartner.model.CompleteData;
 
 import java.util.List;
 
@@ -70,18 +71,22 @@ public class MainController {
                 .build();
         PostTo post = retrofit.create(PostTo.class);
         ProfileController controllerProfile = new ProfileController(context);
-        controllerProfile.sendProfile(post);
 
         List<AccelerometerData> data = dao.getData();
-        Call<List<AccelerometerData>> callData = post.sendAccelerometerData(data);
-        callData.enqueue(new Callback<List<AccelerometerData>>() {
+
+        CompleteData cd = new CompleteData();
+        cd.setProfileData(controllerProfile.getProfile());
+        cd.setAccelerometerData(data);
+
+        Call<CompleteData> callData = post.sendData(cd);
+        callData.enqueue(new Callback<CompleteData>() {
             @Override
-            public void onResponse(Call<List<AccelerometerData>> call, Response<List<AccelerometerData>> response) {
+            public void onResponse(Call<CompleteData> call, Response<CompleteData> response) {
                 // SEND ACQUISITION OK !
             }
 
             @Override
-            public void onFailure(Call<List<AccelerometerData>> call, Throwable t) {
+            public void onFailure(Call<CompleteData> call, Throwable t) {
                 // SEND ACQUISITION KO !
             }
         });

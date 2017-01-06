@@ -46,21 +46,6 @@ public class ProfileController {
         return profile;
     }
 
-    public void sendProfile(PostTo post) {
-        Call<ProfileData> callProfile = post.sendProfileData(getProfile());
-        callProfile.enqueue(new Callback<ProfileData>() {
-            @Override
-            public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
-                // SEND PROFILE OK !
-            }
-
-            @Override
-            public void onFailure(Call<ProfileData> call, Throwable t) {
-                // SEND PROFILE KO !
-            }
-        });
-    }
-
     /**
      * Set the profile in the database.
      * @param data The {@link ProfileData} containing the profile.
