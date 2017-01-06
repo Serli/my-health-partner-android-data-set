@@ -63,9 +63,9 @@ public class AccelerometerDAO {
      *
      * @return The accelerometer data.
      */
-    public List<AccelerometerData> getData() {
+    public ArrayList<AccelerometerData> getData() {
 
-        List<AccelerometerData> acc_data_list = new ArrayList<>();
+        ArrayList<AccelerometerData> acc_data_list = new ArrayList<>();
         Cursor cursor = db.query(Database.ACC_TABLE,
                 allColumns, null, null, null, null, Database.ACC_TSTMP + " DESC");
         cursor.moveToFirst();

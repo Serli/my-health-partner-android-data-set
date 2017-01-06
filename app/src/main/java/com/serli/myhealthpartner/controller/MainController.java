@@ -4,13 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.serli.myhealthpartner.AccelerometerService;
-import com.serli.myhealthpartner.MainActivity;
 import com.serli.myhealthpartner.R;
 import com.serli.myhealthpartner.model.AccelerometerDAO;
 import com.serli.myhealthpartner.model.AccelerometerData;
 import com.serli.myhealthpartner.model.CompleteData;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +71,7 @@ public class MainController {
         PostTo post = retrofit.create(PostTo.class);
         ProfileController controllerProfile = new ProfileController(context);
 
-        List<AccelerometerData> data = dao.getData();
+        ArrayList<AccelerometerData> data = dao.getData();
 
         CompleteData cd = new CompleteData();
         cd.setProfileData(controllerProfile.getProfile());
@@ -99,8 +98,8 @@ public class MainController {
         dao.deleteData();
     }
 
-    public List<AccelerometerData> getData() {
-        List<AccelerometerData> data = dao.getData();
+    public ArrayList<AccelerometerData> getData() {
+        ArrayList<AccelerometerData> data = dao.getData();
         return data;
     }
 
