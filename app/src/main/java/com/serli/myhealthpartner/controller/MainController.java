@@ -65,7 +65,7 @@ public class MainController {
      */
     public void sendAcquisition() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(String.valueOf("http://192.168.42.168:8080/"))
+                .baseUrl(String.valueOf("http://192.168.42.165:8080/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PostTo post = retrofit.create(PostTo.class);

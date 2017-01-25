@@ -14,8 +14,8 @@ public class Database extends SQLiteOpenHelper {
     public final static String PROFILE_TABLE = "Profile_DB";
     public final static String PROFILE_ID = "ID";
     public final static String PROFILE_IMEI= "IMEI";
-    public final static String PROFILE_WEIGHT = "Weight";
-    public final static String PROFILE_HEIGHT = "Height";
+    public final static String PROFILE_WEIGHT = "Height";
+    public final static String PROFILE_HEIGHT = "Weight";
     public final static String PROFILE_AGE = "Age";
     public final static String PROFILE_GENDER = "Gender";
 
@@ -41,9 +41,9 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_PROFILE_TABLE = "CREATE TABLE " + PROFILE_TABLE + " ("
                 + PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + PROFILE_IMEI + " INTEGER NOT NULL,"
-                + PROFILE_WEIGHT + " INTEGER NOT NULL,"
+                + PROFILE_IMEI + " LONG NOT NULL,"
                 + PROFILE_HEIGHT + " INTEGER NOT NULL,"
+                + PROFILE_WEIGHT + " INTEGER NOT NULL,"
                 + PROFILE_AGE + " DATE NOT NULL,"
                 + PROFILE_GENDER + " INTEGER NOT NULL" + ");";
 

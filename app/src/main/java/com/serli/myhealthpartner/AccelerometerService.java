@@ -113,7 +113,7 @@ public class AccelerometerService extends Service {
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-                soundPool.play(soundID, 1, 1, 1, 0, 1);
+                //soundPool.play(soundID, 1, 1, 1, 0, 1);
 
                 if (clientMessenger != null) {
                     try {
@@ -145,7 +145,7 @@ public class AccelerometerService extends Service {
      * Stop the acquisition of the accelerometer data.
      */
     private void stopAcquisition() {
-        soundPool.play(soundID, 1, 1, 1, 0, 1);
+        //soundPool.play(soundID, 1, 1, 1, 0, 1);
         if (clientMessenger != null) {
             try {
                 Message msg = Message.obtain(null, MSG_ACQUISITION_STOP  );

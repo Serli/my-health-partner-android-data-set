@@ -65,7 +65,7 @@ public class ProfileDAO {
      * @return The profile.
      */
     public ProfileData getProfile() {
-        Cursor c = db.query(Database.PROFILE_TABLE, allColumns, null, null, null, null, null);
+        Cursor c = db.query(Database.PROFILE_TABLE, allColumns, null, null, null, null, null, null);
         c.moveToFirst();
         return cursorToData(c);
     }
@@ -75,13 +75,13 @@ public class ProfileDAO {
         if (!cursor.isAfterLast()) {
             prof_data = new ProfileData();
             prof_data.setId_profile(cursor.getInt(0));
-            prof_data.setIMEI(cursor.getInt(1));
+            prof_data.setIMEI(cursor.getLong(1));
             prof_data.setHeight(cursor.getInt(2));
             prof_data.setWeight(cursor.getInt(3));
 
             Date d = new Date(cursor.getLong(4));
             prof_data.setBirthday(d);
-            prof_data.setHeight(cursor.getInt(5));
+            prof_data.setGender(cursor.getInt(5));
         }
         return prof_data;
     }

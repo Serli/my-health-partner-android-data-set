@@ -65,7 +65,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (controller.getProfile() != null) {
             profile = controller.getProfile();
 
-            spinnerGender.setSelection(profile.getGender());
             editTextHeight.setText(String.valueOf(profile.getHeight()));
             editTextWeight.setText(String.valueOf(profile.getWeight()));
 
@@ -97,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
                 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                 telephonyManager.getDeviceId();
 
-                profile.setIMEI(Integer.parseInt(telephonyManager.getDeviceId()));
+                profile.setIMEI(Long.parseLong(telephonyManager.getDeviceId()));
 
                 controller.setProfile(profile);
                 finish();
@@ -107,5 +106,12 @@ public class ProfileActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gender);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        spinnerGender.setSelection(profile.getGender());
     }
 }
