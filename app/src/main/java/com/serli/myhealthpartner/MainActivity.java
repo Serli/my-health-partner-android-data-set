@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //controller.sendAcquisition(); ==> A EFFECTUER DES QUE LA VERITABLE URL DE L'ACCES AU SERVEUR EST VALIDE !
+                controller.sendAcquisition();
                 Toast.makeText(MainActivity.this, R.string.acquisition_sent,Toast.LENGTH_LONG).show();
             }
         });

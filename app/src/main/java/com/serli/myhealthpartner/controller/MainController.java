@@ -65,7 +65,7 @@ public class MainController {
      */
     public void sendAcquisition() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(String.valueOf(R.string.url_server))
+                .baseUrl(String.valueOf("http://192.168.42.168:8080/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PostTo post = retrofit.create(PostTo.class);
@@ -81,12 +81,13 @@ public class MainController {
         callData.enqueue(new Callback<CompleteData>() {
             @Override
             public void onResponse(Call<CompleteData> call, Response<CompleteData> response) {
-                // SEND ACQUISITION OK !
+                System.out.println("Send Acquisition OK !");
             }
 
             @Override
             public void onFailure(Call<CompleteData> call, Throwable t) {
-                // SEND ACQUISITION KO !
+                System.out.println("Send Acquisition KO !");
+                t.printStackTrace();
             }
         });
     }
