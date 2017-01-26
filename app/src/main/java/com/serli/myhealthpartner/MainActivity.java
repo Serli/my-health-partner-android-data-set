@@ -1,11 +1,13 @@
 package com.serli.myhealthpartner;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -13,6 +15,8 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -59,7 +63,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        if (result != PackageManager.PERMISSION_GRANTED){
+            requestPhoneStatePermission();
+        }
+
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
@@ -81,9 +92,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startStopButton = (Button) findViewById(R.id.button_start_stop);
         startStopButton.setOnClickListener(this);
-        if (acquisitionStarted)
+        if (acquisitionStarted) {
             startStopButton.setText(R.string.button_stop);
-
+        }
         autoBindService();
 
         RelativeLayout dataLayout = (RelativeLayout) findViewById(R.id.data_list_layout);
@@ -277,5 +288,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    //We are calling this method to check the permission status
+    private boolean isReadPhoneStateAllowed() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Requesting permission
+    private void requestPhoneStatePermission(){
+        //Ask for the permission
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if(requestCode == 0){
+            //If permission is granted
+            if(!(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                //Displaying this toast if permission is not granted
+                Toast.makeText(this,"You denied the permission",Toast.LENGTH_LONG).show();
+                this.finish();
+            }
+        }
     }
 }
