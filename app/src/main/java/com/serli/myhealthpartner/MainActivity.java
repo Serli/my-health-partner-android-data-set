@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view.getId() == R.id.button_update || view.getId() == R.id.button_clear) {
             if (view.getId() == R.id.button_clear) {
-                controller.DeleteAcquisition();
+                controller.deleteAcquisition();
             }
             populateDataListView();
         }
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialogBuilder.setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controller.DeleteAcquisition();
+                controller.deleteAcquisition();
                 Toast.makeText(MainActivity.this, R.string.acquisition_deleted, Toast.LENGTH_LONG).show();
             }
         });

@@ -44,11 +44,11 @@ public class Database extends SQLiteOpenHelper {
                 + PROFILE_IMEI + " LONG NOT NULL,"
                 + PROFILE_HEIGHT + " INTEGER NOT NULL,"
                 + PROFILE_WEIGHT + " INTEGER NOT NULL,"
-                + PROFILE_AGE + " DATE NOT NULL,"
+                + PROFILE_AGE + " LONG NOT NULL,"
                 + PROFILE_GENDER + " INTEGER NOT NULL" + ");";
 
         String CREATE_ACC_TABLE = "CREATE TABLE " + ACC_TABLE + " ("
-                + ACC_TSTMP + " INTEGER PRIMARY KEY,"
+                + ACC_TSTMP + " LONG PRIMARY KEY,"
                 + ACC_X + " FLOAT NOT NULL,"
                 + ACC_Y + " FLOAT NOT NULL,"
                 + ACC_Z + " FLOAT NOT NULL,"

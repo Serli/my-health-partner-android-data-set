@@ -71,19 +71,19 @@ public class ProfileDAO {
     }
 
     private ProfileData cursorToData(Cursor cursor) {
-        ProfileData prof_data = null;
+        ProfileData profData = null;
         if (!cursor.isAfterLast()) {
-            prof_data = new ProfileData();
-            prof_data.setId_profile(cursor.getInt(0));
-            prof_data.setIMEI(cursor.getLong(1));
-            prof_data.setHeight(cursor.getInt(2));
-            prof_data.setWeight(cursor.getInt(3));
+            profData = new ProfileData();
+            profData.setId_profile(cursor.getInt(0));
+            profData.setIMEI(cursor.getLong(1));
+            profData.setHeight(cursor.getInt(2));
+            profData.setWeight(cursor.getInt(3));
 
             Date d = new Date(cursor.getLong(4));
-            prof_data.setBirthday(d);
-            prof_data.setGender(cursor.getInt(5));
+            profData.setBirthday(d);
+            profData.setGender(cursor.getInt(5));
         }
-        return prof_data;
+        return profData;
     }
 
 }

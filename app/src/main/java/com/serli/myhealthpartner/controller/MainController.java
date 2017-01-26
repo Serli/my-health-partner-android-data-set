@@ -10,6 +10,8 @@ import com.serli.myhealthpartner.model.AccelerometerData;
 import com.serli.myhealthpartner.model.CompleteData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,26 +68,54 @@ public class MainController {
     public void sendAcquisition() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(String.valueOf("http://192.168.42.165:8080/"))
+                .addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         PostTo post = retrofit.create(PostTo.class);
         ProfileController controllerProfile = new ProfileController(context);
 
-        ArrayList<AccelerometerData> data = dao.getData();
+        ArrayList<CompleteData> data = new ArrayList<>();
 
-        CompleteData cd = new CompleteData();
-        cd.setProfileData(controllerProfile.getProfile());
-        cd.setAccelerometerData(data);
+        ArrayList<AccelerometerData> accData = dao.getData();
 
-        Call<CompleteData> callData = post.sendData(cd);
-        callData.enqueue(new Callback<CompleteData>() {
+        Calendar curr = Calendar.getInstance();
+        Calendar birth = Calendar.getInstance();
+
+        birth.setTime(controllerProfile.getProfile().getBirthday());
+        int age = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+        curr.add(Calendar.YEAR,-age);
+        if(birth.after(curr))
+        {
+            age = age - 1;
+        }
+
+        for (int i = 0; i < accData.size(); i++) {
+            CompleteData cd = new CompleteData();
+            cd.setHeight(controllerProfile.getProfile().getHeight());
+            cd.setWeight(controllerProfile.getProfile().getWeight());
+            cd.setImei(controllerProfile.getProfile().getIMEI());
+
+            cd.setAge(age);
+            cd.setGender(controllerProfile.getProfile().getGender());
+            cd.setTimestamp(accData.get(i).getTimestamp());
+            cd.setX(accData.get(i).getX());
+            cd.setY(accData.get(i).getY());
+            cd.setZ(accData.get(i).getZ());
+            cd.setActivity(accData.get(i).getActivity());
+            data.add(cd);
+        }
+
+        dao.deleteData();
+
+        Call<ArrayList<CompleteData>> callData = post.sendData(data);
+        callData.enqueue(new Callback<ArrayList<CompleteData>>() {
             @Override
-            public void onResponse(Call<CompleteData> call, Response<CompleteData> response) {
+            public void onResponse(Call<ArrayList<CompleteData>> call, Response<ArrayList<CompleteData>> response) {
                 System.out.println("Send Acquisition OK !");
             }
 
             @Override
-            public void onFailure(Call<CompleteData> call, Throwable t) {
+            public void onFailure(Call<ArrayList<CompleteData>> call, Throwable t) {
                 System.out.println("Send Acquisition KO !");
                 t.printStackTrace();
             }
@@ -95,7 +125,7 @@ public class MainController {
     /**
      * Delete the stored data.
      */
-    public void DeleteAcquisition() {
+    public void deleteAcquisition() {
         dao.deleteData();
     }
 

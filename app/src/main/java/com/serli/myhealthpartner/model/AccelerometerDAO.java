@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Link between the acceleremoter data table in the {@link Database} and the controllers.
+ * Link between the accelerometer data table in the {@link Database} and the controllers.
  */
 public class AccelerometerDAO {
 
