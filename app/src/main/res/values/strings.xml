@@ -20,4 +20,5 @@
     <string name="acquisition_sent">Acquisition sent</string>
     <string name="acquisition_deleted">Acquisition deleted</string>
     <string name="url_server">URL SERVER</string>
+    <string name="invalid_profile">Invalid profile</string>
 </resources>

@@ -18,6 +18,7 @@
     <string name="acquisition_sent">Acquisition envoyée</string>
     <string name="acquisition_deleted">Acquisition supprimée</string>
     <string name="url_server">URL SERVER</string>
+    <string name="invalid_profile">Invalid profile</string>
 
     <string-array name="sport_activity">
         <item>Marche</item>

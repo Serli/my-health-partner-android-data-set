@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.serli.myhealthpartner.controller.MainController;
+import com.serli.myhealthpartner.controller.ProfileController;
 import com.serli.myhealthpartner.model.AccelerometerData;
 
 import java.sql.Timestamp;
@@ -47,7 +48,8 @@ import java.util.Locale;
 // TODO : Add send and delete acquisition.
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ServiceConnection {
 
-    private MainController controller;
+    private MainController mainController;
+    private ProfileController profileController;
 
     private NumberPicker minutePicker;
     private NumberPicker secondPicker;
@@ -64,17 +66,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mainController = new MainController(this);
+        profileController = new ProfileController(this);
+
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
         if (result != PackageManager.PERMISSION_GRANTED){
             requestPhoneStatePermission();
+        }
+        else{
+            verifyExistingProfile();
         }
 
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-
-        controller = new MainController(this);
 
         acquisitionStarted = AccelerometerService.isRunning();
 
@@ -135,21 +141,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.button_start_stop) {
             if (acquisitionStarted) {
                 doUnbindService();
-                controller.stopAcquisition();
+                mainController.stopAcquisition();
                 startStopButton.setText(R.string.button_start);
                 acquisitionStarted = false;
                 displayAlertDialog();
             } else {
                 long duration = minutePicker.getValue() * 60000L + secondPicker.getValue() * 1000L;
                 if (duration > 0) {
-                    controller.startAcquisition(duration, activitySpinner.getSelectedItemPosition());
+                    mainController.startAcquisition(duration, activitySpinner.getSelectedItemPosition());
                     doBindService();
                 }
             }
         }
         if (view.getId() == R.id.button_update || view.getId() == R.id.button_clear) {
             if (view.getId() == R.id.button_clear) {
-                controller.deleteAcquisition();
+                mainController.deleteAcquisition();
             }
             populateDataListView();
         }
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void populateDataListView() {
         ListView listView = (ListView) findViewById(R.id.data_list_view);
-        final List<AccelerometerData> dataList = controller.getData();
+        final List<AccelerometerData> dataList = mainController.getData();
         ArrayAdapter<AccelerometerData> dataArrayAdapter = new ArrayAdapter<AccelerometerData>(this, android.R.layout.simple_list_item_2, android.R.id.text1, dataList) {
             @NonNull
             @Override
@@ -175,8 +181,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss,S", Locale.getDefault());
 
                 text1.setText(dateFormat.format(new Timestamp(data.getTimestamp())));
-                text2.setText(String.format(Locale.getDefault(), "x=%1$.2f y=%2$.2f z=%3$.2f %4", data.getX(), data.getY(), data.getZ(), MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]));
-
+                String strX = String.format("%.2f", data.getX());
+                String strY = String.format("%.2f", data.getY());
+                String strZ = String.format("%.2f", data.getZ());
+                text2.setText("x=" + strX + " y=" + strY + " z=" + strZ + " " + MainActivity.this.getResources().getTextArray(R.array.sport_activity)[data.getActivity()]);
                 return view;
             }
         };
@@ -274,31 +282,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controller.sendAcquisition();
+                mainController.sendAcquisition();
                 Toast.makeText(MainActivity.this, R.string.acquisition_sent,Toast.LENGTH_LONG).show();
             }
         });
         alertDialogBuilder.setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controller.deleteAcquisition();
+                mainController.deleteAcquisition();
                 Toast.makeText(MainActivity.this, R.string.acquisition_deleted, Toast.LENGTH_LONG).show();
             }
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    //We are calling this method to check the permission status
-    private boolean isReadPhoneStateAllowed() {
-        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     //Requesting permission
@@ -319,6 +316,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"You denied the permission",Toast.LENGTH_LONG).show();
                 this.finish();
             }
+            else{
+                verifyExistingProfile();
+            }
+        }
+    }
+
+    public void verifyExistingProfile(){
+        if (profileController.getProfile() == null){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         }
     }
 }
