@@ -67,7 +67,7 @@ public class MainController {
      */
     public void sendAcquisition() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(String.valueOf("http://192.168.42.165:8080/"))
+                .baseUrl(String.valueOf("http://salquier.pro:80/"))
                 .addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
