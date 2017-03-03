@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.serli.myhealthpartner">
+    package="com.serli.myhealthpartnerdevelopper">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.serli.myhealthpartnerdevelopper.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,17 +19,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.serli.myhealthpartnerdevelopper.ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.serli.myhealthpartnerdevelopper.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.serli.myhealthpartner.MainActivity" />
+                android:value="com.serli.myhealthpartnerdevelopper.MainActivity" />
         </activity>
 
         <service
-            android:name=".AccelerometerService"
+            android:name="com.serli.myhealthpartnerdevelopper.AccelerometerService"
             android:enabled="true"
             android:exported="false" />
     </application>

@@ -1,6 +1,4 @@
-package com.serli.myhealthpartner.model;
-
-import java.util.Date;
+package com.serli.myhealthpartnerdevelopper.model;
 
 /**
  * Created by nathan on 06/01/17.

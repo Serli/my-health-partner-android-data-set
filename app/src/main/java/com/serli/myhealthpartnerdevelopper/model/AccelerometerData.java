@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner.model;
+package com.serli.myhealthpartnerdevelopper.model;
 
 /**
  * Contains the data that we collect with the smartphone's Accelerometer

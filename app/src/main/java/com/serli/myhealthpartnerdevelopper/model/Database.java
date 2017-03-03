@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner.model;
+package com.serli.myhealthpartnerdevelopper.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

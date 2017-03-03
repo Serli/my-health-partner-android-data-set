@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,17 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.serli.myhealthpartner.controller.ProfileController;
-import com.serli.myhealthpartner.model.ProfileData;
+import com.serli.myhealthpartnerdevelopper.controller.ProfileController;
+import com.serli.myhealthpartnerdevelopper.model.ProfileData;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * View of Profile Activity.<br/>

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">MyHealthPartner</string>
-    <string name="title_activity_main" translatable="false">My Health Partner</string>
+    <string name="app_name" translatable="false">MyHealthPartnerDevelopper</string>
+    <string name="title_activity_main" translatable="false">My Health Partner Developper Mode</string>
     <string name="title_activity_profile">Profile</string>
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>

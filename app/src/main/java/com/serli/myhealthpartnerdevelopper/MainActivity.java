@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -32,9 +32,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.serli.myhealthpartner.controller.MainController;
-import com.serli.myhealthpartner.controller.ProfileController;
-import com.serli.myhealthpartner.model.AccelerometerData;
+import com.serli.myhealthpartnerdevelopper.controller.MainController;
+import com.serli.myhealthpartnerdevelopper.controller.ProfileController;
+import com.serli.myhealthpartnerdevelopper.model.AccelerometerData;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

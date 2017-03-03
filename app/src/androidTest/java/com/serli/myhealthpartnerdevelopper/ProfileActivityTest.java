@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,18 +1,9 @@
-package com.serli.myhealthpartner.controller;
+package com.serli.myhealthpartnerdevelopper.controller;
 
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.widget.Toast;
 
-import com.serli.myhealthpartner.model.AccelerometerData;
-import com.serli.myhealthpartner.model.ProfileDAO;
-import com.serli.myhealthpartner.model.ProfileData;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.serli.myhealthpartnerdevelopper.model.ProfileDAO;
+import com.serli.myhealthpartnerdevelopper.model.ProfileData;
 
 /**
  * Controller for the profile.

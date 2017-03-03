@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
 import android.content.Intent;
 import android.os.SystemClock;

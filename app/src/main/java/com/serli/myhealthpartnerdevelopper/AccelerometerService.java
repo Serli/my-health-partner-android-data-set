@@ -1,7 +1,5 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -17,8 +15,8 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.SystemClock;
 
-import com.serli.myhealthpartner.controller.MainController;
-import com.serli.myhealthpartner.model.AccelerometerDAO;
+import com.serli.myhealthpartnerdevelopper.controller.MainController;
+import com.serli.myhealthpartnerdevelopper.model.AccelerometerDAO;
 
 /**
  * This service store the accelerometer data for the duration specified in the intent.<br/>

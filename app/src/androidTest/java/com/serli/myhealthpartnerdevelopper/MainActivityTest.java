@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner;
+package com.serli.myhealthpartnerdevelopper;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;

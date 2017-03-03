@@ -1,15 +1,11 @@
-package com.serli.myhealthpartner.controller;
+package com.serli.myhealthpartnerdevelopper.controller;
 
-import com.serli.myhealthpartner.model.AccelerometerData;
-import com.serli.myhealthpartner.model.CompleteData;
-import com.serli.myhealthpartner.model.ProfileData;
+import com.serli.myhealthpartnerdevelopper.model.CompleteData;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**

@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner.controller;
+package com.serli.myhealthpartnerdevelopper.controller;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

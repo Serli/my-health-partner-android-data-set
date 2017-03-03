@@ -1,4 +1,4 @@
-package com.serli.myhealthpartner.model;
+package com.serli.myhealthpartnerdevelopper.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Link between the accelerometer data table in the {@link Database} and the controllers.

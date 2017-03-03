@@ -1,17 +1,15 @@
-package com.serli.myhealthpartner.controller;
+package com.serli.myhealthpartnerdevelopper.controller;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.serli.myhealthpartner.AccelerometerService;
-import com.serli.myhealthpartner.R;
-import com.serli.myhealthpartner.model.AccelerometerDAO;
-import com.serli.myhealthpartner.model.AccelerometerData;
-import com.serli.myhealthpartner.model.CompleteData;
+import com.serli.myhealthpartnerdevelopper.AccelerometerService;
+import com.serli.myhealthpartnerdevelopper.model.AccelerometerDAO;
+import com.serli.myhealthpartnerdevelopper.model.AccelerometerData;
+import com.serli.myhealthpartnerdevelopper.model.CompleteData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
